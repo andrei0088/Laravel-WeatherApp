@@ -32,9 +32,51 @@ class WeatherController extends Controller
 
     private $windDirs = ['N','NE','E','SE','S','SW','W','NW'];
 
+
     public function index()
     {
-        $cities = ['Bucharest', 'Brasov']; // poți adăuga cât vrei
+     $cities = [
+    "Andorra la Vella",
+    "Amsterdam",
+    "Athens",
+    "Belgrade",
+    "Berlin",
+    "Bern",
+    "Bratislava",
+    "Brussels",
+    "Bucharest",
+    "Budapest",
+    "Chisinau",
+    "Copenhagen",
+    "Dublin",
+    "Helsinki",
+    "Kyiv",
+    "Lisbon",
+    "Ljubljana",
+    "London",
+    "Luxembourg",
+    "Madrid",
+    "Minsk",
+    "Monaco",
+    "Moscow",
+    "Nicosia",
+    "Oslo",
+    "Paris",
+    "Prague",
+    "Riga",
+    "Rome",
+    "San Marino",
+    "Skopje",
+    "Sofia",
+    "Stockholm",
+    "Tallinn",
+    "Tirana",
+    "Vienna",
+    "Vilnius",
+    "Warsaw",
+    "Zagreb",
+  ];
+
         $API_KEY = env('WEATHER_API_KEY');
         $client = new Client();
 
@@ -79,5 +121,29 @@ class WeatherController extends Controller
     public function contact()
     {
         return view('contact');
+    }
+    public function search(Request $request)
+    {
+        $city = $request->input('city');
+        
+
+        $API_KEY = env('WEATHER_API_KEY');
+        $client = new Client();
+        $url = "https://api.openweathermap.org/data/2.5/weather?q=".urlencode($city)."&appid=".$API_KEY."&units=metric";
+
+        try {
+            $response = $client->request('GET', $url, ['timeout' => 5]);
+            $data = json_decode($response->getBody(), true);
+
+            // adaugă icon și direcția vântului direct în array
+            $data['icon_class'] = $this->getBootstrapWeatherIcon($data['weather'][0]['icon'] ?? null);
+            $data['wind_dir'] = isset($data['wind']['deg']) ? $this->getWindDirection($data['wind']['deg']) : null;
+
+            
+            return view('search', ['meteo' => $data, 'city' => $data['name']]);
+
+        } catch(RequestException $e) {
+            return redirect()->route('home')->with('error', "Unable to fetch weather data for {$city}: ".$e->getMessage());
+        }
     }
 }

@@ -31,10 +31,10 @@
       <div class="hidden md:flex items-center gap-6">
         <ul class="flex gap-6 text-lg font-medium text-gray-700">
           <li><a href="/" class="hover:text-blue-600 transition">Home</a></li>
-          <li><a href="/about" class="hover:text-blue-600 transition">About</a></li>
-          <li><a href="/contact" class="hover:text-blue-600 transition">Contact</a></li>
+          <li><a href={{route('about')}} class="hover:text-blue-600 transition">About</a></li>
+          <li><a href={{route('contact')}} class="hover:text-blue-600 transition">Contact</a></li>
         </ul>
-        <form action="#/weather" class="flex items-center bg-gray-100 rounded-lg overflow-hidden shadow-sm ml-4">
+        <form action={{route('search')}} class="flex items-center bg-gray-100 rounded-lg overflow-hidden shadow-sm ml-4">
           <input type="text" name="city" placeholder="Search city..."
             class="px-3 py-2 outline-none text-gray-700 w-40 md:w-56 bg-gray-100" />
           <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2">

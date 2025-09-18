@@ -2,7 +2,7 @@
 
 @section('content')
 
-<section class="contact-wrapper py-12 bg-gray-100 min-h-screen flex items-center justify-center">
+<section class="contact-wrapper py-6 bg-gray-100 flex items-center justify-center">
     <div class="contact-card bg-white shadow-lg rounded-2xl max-w-3xl p-8 md:p-12">
         <h2 class="contact-title text-3xl md:text-4xl font-bold text-gray-800 mb-6 text-center">
             Contact
